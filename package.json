@@ -1,8 +1,8 @@
 {
   "name": "react-checkbox-tree",
-  "version": "0.6.4",
+  "version": "1.0.0",
   "description": "A simple and elegant checkbox tree for React.",
-  "author": "Jake Zatecky",
+  "author": "sqrtoo",
   "license": "MIT",
   "keywords": [
     "react",
