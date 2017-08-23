@@ -21,6 +21,7 @@ class CheckboxTree extends React.Component {
         noCascade: PropTypes.bool,
         optimisticToggle: PropTypes.bool,
         showNodeIcon: PropTypes.bool,
+        singleValueOnly: PropTypes.bool,
         onCheck: PropTypes.func,
         onExpand: PropTypes.func,
     };
@@ -36,6 +37,7 @@ class CheckboxTree extends React.Component {
         optimisticToggle: true,
         showNodeIcon: true,
         allowFolderSelector: true,
+        singleValueOnly: false,
         onCheck: () => {},
         onExpand: () => {},
     };
@@ -193,6 +195,7 @@ class CheckboxTree extends React.Component {
             noCascade,
             optimisticToggle,
             showNodeIcon,
+            singleValueOnly,
             allowFolderSelector } = this.props;
 
         const treeNodes = nodes.map((node) => {
@@ -203,6 +206,7 @@ class CheckboxTree extends React.Component {
             return (
                 <TreeNode
                     key={key}
+                    singleValueOnly={singleValueOnly}
                     allowFolderSelector={allowFolderSelector}
                     checked={checked}
                     className={node.className}

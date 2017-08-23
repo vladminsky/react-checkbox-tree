@@ -127,6 +127,19 @@
   content: "\f046";
 }
 
+.rct-icon-unradio::before {
+  content: "\f10c";
+}
+
+.rct-icon-radio::before {
+  content: "\f192";
+}
+
+.rct-icon-half-radio::before {
+  opacity: .5;
+  content: "\f192";
+}
+
 .rct-icon-leaf::before {
   content: "\f016";
 }

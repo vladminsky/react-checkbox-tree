@@ -14,6 +14,7 @@ class TreeNode extends React.Component {
         label: PropTypes.string.isRequired,
         optimisticToggle: PropTypes.bool.isRequired,
         showNodeIcon: PropTypes.bool.isRequired,
+        singleValueOnly: PropTypes.bool.isRequired,
         treeId: PropTypes.string.isRequired,
         value: PropTypes.string.isRequired,
         onCheck: PropTypes.func.isRequired,
@@ -104,16 +105,18 @@ class TreeNode extends React.Component {
         return <span className="rct-icon rct-icon-expand-open" />;
     }
 
-    renderCheckboxIcon() {
+    renderCheckboxIcon(singleValueOnly) {
+        const suffix = singleValueOnly ? 'radio' : 'check';
+        const genClass = (head, tail) => (head + tail);
         if (this.props.checked === 0) {
-            return <span className="rct-icon rct-icon-uncheck" />;
+            return <span className={genClass('rct-icon rct-icon-un', suffix)} />;
         }
 
         if (this.props.checked === 1) {
-            return <span className="rct-icon rct-icon-check" />;
+            return <span className={genClass('rct-icon rct-icon-', suffix)} />;
         }
 
-        return <span className="rct-icon rct-icon-half-check" />;
+        return <span className={genClass('rct-icon rct-icon-half-', suffix)} />;
     }
 
     renderNodeIcon() {
@@ -149,6 +152,7 @@ class TreeNode extends React.Component {
             label,
             showNodeIcon,
             value,
+            singleValueOnly,
             allowFolderSelector } = this.props;
         const inputId = `${treeId}-${value}`;
         const isFolder = this.hasChildren();
@@ -171,7 +175,7 @@ class TreeNode extends React.Component {
                             onChange={this.onCheck}
                         />
                         {(!isFolder || (isFolder && allowFolderSelector))
-                            ? (<span className="rct-checkbox">{this.renderCheckboxIcon()}</span>)
+                            ? (<span className="rct-checkbox">{this.renderCheckboxIcon(singleValueOnly)}</span>)
                             : null
                         }
                         {showNodeIcon
