@@ -6,6 +6,7 @@ import nodeShape from './nodeShape';
 
 class TreeNode extends React.Component {
     static propTypes = {
+        allowFolderSelector: PropTypes.bool.isRequired,
         checked: PropTypes.number.isRequired,
         disabled: PropTypes.bool.isRequired,
         expandDisabled: PropTypes.bool.isRequired,
@@ -25,6 +26,7 @@ class TreeNode extends React.Component {
     };
 
     static defaultProps = {
+        allowFolderSelector: true,
         children: null,
         className: null,
         icon: null,
@@ -139,12 +141,21 @@ class TreeNode extends React.Component {
     }
 
     render() {
-        const { checked, className, disabled, treeId, label, showNodeIcon, value } = this.props;
+        const {
+            checked,
+            className,
+            disabled,
+            treeId,
+            label,
+            showNodeIcon,
+            value,
+            allowFolderSelector } = this.props;
         const inputId = `${treeId}-${value}`;
+        const isFolder = this.hasChildren();
         const nodeClass = classNames({
             'rct-node': true,
-            'rct-node-parent': this.hasChildren(),
-            'rct-node-leaf': !this.hasChildren(),
+            'rct-node-parent': isFolder,
+            'rct-node-leaf': !isFolder,
         }, className);
 
         return (
@@ -159,14 +170,14 @@ class TreeNode extends React.Component {
                             type="checkbox"
                             onChange={this.onCheck}
                         />
-                        <span className="rct-checkbox">
-                            {this.renderCheckboxIcon()}
-                        </span>
-                        {showNodeIcon ? (
-                            <span className="rct-node-icon">
-                                {this.renderNodeIcon()}
-                            </span>
-                        ) : null}
+                        {(!isFolder || (isFolder && allowFolderSelector))
+                            ? (<span className="rct-checkbox">{this.renderCheckboxIcon()}</span>)
+                            : null
+                        }
+                        {showNodeIcon
+                            ? (<span className="rct-node-icon">{this.renderNodeIcon()}</span>)
+                            : null
+                        }
                         <span className="rct-title">
                             {label}
                         </span>
